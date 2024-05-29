@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <ctime>
+#include <cstdlib>
 using namespace std;
 int firstPlayerScore=0;
 int secondPlayerScore=0;
@@ -27,7 +29,6 @@ void secondPlayerAnswer(){
     cout<<"Enter the character: ";
     cin>>answer2;
 }
-vector<string> computer;
 string computerAnswer(){
     return characters[rand() % characters.size()];
 }
@@ -35,26 +36,30 @@ string computerAnswer(){
 
 
 int main(){
+    srand(static_cast<unsigned int>(time(0)));
     char playAgain='y';
     char againtsWho='c';
     displayRules();
     while(playAgain=='y' || playAgain=='Y'){
+        int firstPlayerScore=0;
+        int secondPlayerScore=0;
+        int computerScore=0;    
         cout<<"With againts computer prees c "<<endl;
         cout<<"With againts with your friends enter others key: ";
         cin>>againtsWho;
         if(againtsWho=='c' || againtsWho=='C'){
-            while(firstPlayerScore<3 || computerScore<3){
+            while(computerScore<3 && firstPlayerScore<3){
                 int i=0;
                 firstPlayerAnswer();
-                computer.push_back(computerAnswer());
-                if((answer1=="rock" && computer[i]=="scissor") || (answer1=="scissor" && computer[i]=="paper") ||
-                (answer1=="paper" && computer[i]=="rock")){
+                string compChoice=computerAnswer();
+                if((answer1=="rock" && compChoice=="scissor") || (answer1=="scissor" && compChoice=="paper") ||
+                (answer1=="paper" && compChoice=="rock")){
                     cout<<"You won the round"<<endl;
                     firstPlayerScore++;
                     cout<<"First Player score: "<<firstPlayerScore<<"  "<<"computer score: "<<computerScore<<endl;
                     i++;
                 }
-                else if (answer1==computer[i]){
+                else if (answer1==compChoice){
                     cout<<"you drew with computer"<<endl;
                     i++;
                     cout<<"First Player: "<<firstPlayerScore<<"  "<<"computer score: "<<computerScore<<endl;
